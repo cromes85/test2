@@ -7,7 +7,11 @@ function processImage(img) {
 
     // En supposant que l'ID est toujours dans la section inférieure de la carte, ajustez si nécessaire
     const bottomSectionHeight = img.height * 0.1;  // ajustez le pourcentage selon les besoins
-    const imageData = ctx.getImageData(0, img.height - bottomSectionHeight, img.width, bottomSectionHeight);
+    const croppedCanvas = document.createElement('canvas');
+    croppedCanvas.width = img.width;
+    croppedCanvas.height = bottomSectionHeight;
+    const croppedCtx = croppedCanvas.getContext('2d');
+    croppedCtx.drawImage(canvas, 0, img.height - bottomSectionHeight, img.width, bottomSectionHeight, 0, 0, img.width, bottomSectionHeight);
 
-    detectId(canvas);
+    detectId(croppedCanvas);
 }
