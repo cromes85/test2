@@ -23,11 +23,9 @@ function identifyCard(imgElement) {
     let src = cv.imread(imgElement);
     let gray = new cv.Mat();
     cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
-    let thresh = new cv.Mat();
-    cv.threshold(gray, thresh, 150, 255, cv.THRESH_BINARY);
     let contours = new cv.MatVector();
     let hierarchy = new cv.Mat();
-    cv.findContours(thresh, contours, hierarchy, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE);
+    cv.findContours(gray, contours, hierarchy, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE);
 
     for (let i = 0; i < contours.size(); i++) {
         let cnt = contours.get(i);
@@ -39,7 +37,7 @@ function identifyCard(imgElement) {
         roi.delete();
     }
 
-    src.delete(); gray.delete(); thresh.delete(); contours.delete(); hierarchy.delete();
+    src.delete(); gray.delete(); contours.delete(); hierarchy.delete();
 }
 
 function performOCR(roi) {

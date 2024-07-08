@@ -29,6 +29,6 @@ body {
 }
 .container img {
     margin-top: 20px;
-    max-width: 50%;
+    max-width: 100%;
     height: auto;
 }
