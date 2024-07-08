@@ -26,47 +26,20 @@ function identifyCard(imgElement) {
   let gray = new cv.Mat();
   cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
 
-  // Appliquer un filtre Gaussien pour réduire le bruit
-  let blurred = new cv.Mat();
-  cv.GaussianBlur(gray, blurred, new cv.Size(5, 5), 0);
+  // Appliquer un seuillage simple
+  let thresh = new cv.Mat();
+  cv.threshold(gray, thresh, 150, 255, cv.THRESH_BINARY);
 
-  // Appliquer la détection de bordures avec Canny
-  let edges = new cv.Mat();
-  cv.Canny(blurred, edges, 50, 150);
-
-  // Trouver les contours
-  let contours = new cv.MatVector();
-  let hierarchy = new cv.Mat();
-  cv.findContours(
-    edges,
-    contours,
-    hierarchy,
-    cv.RETR_CCOMP,
-    cv.CHAIN_APPROX_SIMPLE
-  );
-
-  // Traiter les contours
-  for (let i = 0; i < contours.size(); i++) {
-    let cnt = contours.get(i);
-    let rect = cv.boundingRect(cnt);
-    let roi = gray.roi(rect);
-
-    performOCR(roi);
-
-    roi.delete();
-  }
+  performOCR(thresh);
 
   src.delete();
   gray.delete();
-  blurred.delete();
-  edges.delete();
-  contours.delete();
-  hierarchy.delete();
+  thresh.delete();
 }
 
-function performOCR(roi) {
+function performOCR(imgMat) {
   let canvas = document.createElement("canvas");
-  cv.imshow(canvas, roi);
+  cv.imshow(canvas, imgMat);
 
   Tesseract.recognize(canvas, "eng", {
     logger: (m) => console.log(m),
@@ -79,16 +52,18 @@ function performOCR(roi) {
 
 function parseCardInfo(text) {
   // Analyse du texte détecté pour extraire les informations de la carte
-  let nameMatch = text.match(/name: (\w+)/i);
-  let levelMatch = text.match(/level: (\w+)/i);
+  let nameMatch = text.match(
+    /Venusaur|Bulbasaur|Charmander|Squirtle|Pikachu|Eevee/i
+  );
+  let levelMatch = text.match(/STAGE \d/i);
   let seriesMatch = text.match(/series: (\w+)/i);
-  let idMatch = text.match(/id: (\w+)/i);
+  let idMatch = text.match(/\d+\/\d+/);
 
   return {
-    name: nameMatch ? nameMatch[1] : "Inconnu",
-    level: levelMatch ? levelMatch[1] : "Inconnu",
+    name: nameMatch ? nameMatch[0] : "Inconnu",
+    level: levelMatch ? levelMatch[0] : "Inconnu",
     series: seriesMatch ? seriesMatch[1] : "Inconnu",
-    id: idMatch ? idMatch[1] : "Inconnu",
+    id: idMatch ? idMatch[0] : "Inconnu",
   };
 }
 
