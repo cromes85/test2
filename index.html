@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détection d'ID de carte Pokémon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
 </head>
 <body>
     <h1>Détection d'ID de carte Pokémon</h1>
     <input type="file" id="imageUpload" accept="image/*">
+    <br><br>
+    <div>
+        <img id="image" style="max-width: 100%; display: none;">
+    </div>
+    <br>
+    <button id="cropButton" style="display: none;">Recadrer et détecter l'ID</button>
+    <br><br>
     <canvas id="imageCanvas" style="display:none;"></canvas>
     <div id="results"></div>
     <script src="firsTraitement.js"></script>
