@@ -5,8 +5,8 @@ function processImage(img) {
   canvas.height = img.height;
   ctx.drawImage(img, 0, 0);
 
-  // Assuming the ID is always in the bottom section of the card, adjust as necessary
-  const bottomSectionHeight = img.height * 0.1; // adjust the percentage as needed
+  // En supposant que l'ID est toujours dans la section inférieure de la carte, ajustez si nécessaire
+  const bottomSectionHeight = img.height * 0.1; // ajustez le pourcentage selon les besoins
   const imageData = ctx.getImageData(
     0,
     img.height - bottomSectionHeight,
