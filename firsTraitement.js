@@ -9,5 +9,5 @@ function processImage(img) {
     const bottomSectionHeight = img.height * 0.1;  // ajustez le pourcentage selon les besoins
     const imageData = ctx.getImageData(0, img.height - bottomSectionHeight, img.width, bottomSectionHeight);
 
-    detectId(imageData);
+    detectId(canvas);
 }
