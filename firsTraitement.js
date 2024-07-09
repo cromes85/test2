@@ -32,3 +32,4 @@ function processImage(croppedCanvas) {
 
   console.log("Image processed, ready for ID detection.");
 }
+window.processImage = processImage;
