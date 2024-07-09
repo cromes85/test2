@@ -1,3 +1,5 @@
+//autoCrop.js
+
 function autoCrop() {
   const img = document.getElementById('uploadedImage');
   const canvas = document.getElementById('imageCanvas');

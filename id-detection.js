@@ -1,3 +1,5 @@
+//id-detection.js
+
 function detectId(canvas) {
     const ctx = canvas.getContext('2d');
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -5,7 +7,7 @@ function detectId(canvas) {
   
     // Utilisation de Tesseract.js pour la détection de texte
     Tesseract.recognize(
-      data,
+      canvas, // Pass the canvas directly
       'eng',
       {
         logger: m => console.log(m),
@@ -15,5 +17,4 @@ function detectId(canvas) {
       document.getElementById('detectedId').textContent = `ID détecté : ${text}`;
     });
   }
-  window.detectId = detectId;
-  
+window.detectId = detectId;

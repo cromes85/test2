@@ -13,5 +13,4 @@ function initManualCrop() {
     console.log('Manual cropping initialized.');
 }
 
-
 window.initManualCrop = initManualCrop;
