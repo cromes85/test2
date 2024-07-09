@@ -43,3 +43,6 @@ function autoCrop() {
   hierarchy.delete();
   cropped.delete();
 }
+
+// Ensure the function is available globally
+window.autoCrop = autoCrop;
