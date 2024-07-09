@@ -1,4 +1,5 @@
 function processImage(croppedCanvas) {
+  console.log("Processing cropped canvas:", croppedCanvas);
   const canvas = document.getElementById("imageCanvas");
   const ctx = canvas.getContext("2d");
   const scale = 2; // Augmentez ce facteur pour une résolution plus élevée
@@ -29,5 +30,5 @@ function processImage(croppedCanvas) {
   }
   ctx.putImageData(grayImageData, 0, 0);
 
-  detectId(canvas);
+  console.log("Image processed, ready for ID detection.");
 }

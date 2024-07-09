@@ -1,51 +1,45 @@
-function autoCropImage(img, callback) {
-  console.log("Auto-cropping image:", img);
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+function autoCrop() {
+  const img = document.getElementById('uploadedImage');
+  const canvas = document.getElementById('imageCanvas');
+  const ctx = canvas.getContext('2d');
 
-  const originalWidth = img.width;
-  const originalHeight = img.height;
+  // Load image onto canvas
+  canvas.width = img.width;
+  canvas.height = img.height;
+  ctx.drawImage(img, 0, 0, img.width, img.height);
 
-  console.log("Original dimensions:", originalWidth, originalHeight);
+  const src = cv.imread(canvas);
+  const dst = new cv.Mat();
+  const ksize = new cv.Size(3, 3);
+  cv.GaussianBlur(src, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
+  cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
+  cv.Canny(dst, dst, 50, 100, 3, false);
 
-  // Dimensions standard des cartes Pokémon en cm
-  const standardWidth = 6.3;
-  const standardHeight = 8.8;
+  const contours = new cv.MatVector();
+  const hierarchy = new cv.Mat();
+  cv.findContours(dst, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
 
-  // Déterminer l'échelle
-  const scale = Math.min(
-    originalWidth / standardWidth,
-    originalHeight / standardHeight
-  );
+  let maxArea = 0;
+  let bestContour = null;
+  for (let i = 0; i < contours.size(); ++i) {
+      const contour = contours.get(i);
+      const area = cv.contourArea(contour);
+      if (area > maxArea) {
+          maxArea = area;
+          bestContour = contour;
+      }
+  }
 
-  // Calculer les dimensions recadrées
-  const cropWidth = standardWidth * scale;
-  const cropHeight = standardHeight * scale;
+  const rect = cv.boundingRect(bestContour);
+  cv.rectangle(src, new cv.Point(rect.x, rect.y), new cv.Point(rect.x + rect.width, rect.y + rect.height), [255, 0, 0, 255], 2);
 
-  // Calculer la position de recadrage
-  const cropX = (originalWidth - cropWidth) / 2;
-  const cropY = (originalHeight - cropHeight) / 2;
+  const cropped = src.roi(rect);
 
-  console.log("Crop dimensions:", cropWidth, cropHeight, cropX, cropY);
+  cv.imshow('imageCanvas', cropped);
 
-  // Configurer le canvas
-  canvas.width = cropWidth;
-  canvas.height = cropHeight;
-
-  // Dessiner l'image recadrée
-  ctx.drawImage(
-    img,
-    cropX,
-    cropY,
-    cropWidth,
-    cropHeight,
-    0,
-    0,
-    cropWidth,
-    cropHeight
-  );
-
-  // Obtenir l'URL de données de l'image recadrée
-  const croppedImageDataUrl = canvas.toDataURL();
-  callback(croppedImageDataUrl);
+  src.delete();
+  dst.delete();
+  contours.delete();
+  hierarchy.delete();
+  cropped.delete();
 }
