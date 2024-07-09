@@ -1,4 +1,5 @@
 function detectId(canvas) {
+    console.log('Detecting ID from canvas:', canvas);
     Tesseract.recognize(
         canvas.toDataURL(),  // Utilisation de l'URL de données de l'image
         'eng',
@@ -6,6 +7,7 @@ function detectId(canvas) {
             logger: m => console.log(m)
         }
     ).then(({ data: { text } }) => {
+        console.log('Recognized text:', text);
         const idMatch = text.match(/\b\d{1,3}\/\d{1,3}\b/);
         if (idMatch) {
             displayResult(idMatch[0]);

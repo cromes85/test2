@@ -1,6 +1,7 @@
 let cropper;
 
 function initializeCropper(img) {
+    console.log('Initializing cropper for image:', img);
     if (cropper) {
         cropper.destroy();
     }
@@ -19,5 +20,7 @@ function initializeCropper(img) {
 }
 
 function getCroppedCanvas() {
-    return cropper.getCroppedCanvas();
+    const canvas = cropper.getCroppedCanvas();
+    console.log('Cropped canvas:', canvas);
+    return canvas;
 }
