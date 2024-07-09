@@ -1,6 +1,6 @@
 // id-detection.js
 
-function processImage(canvas) {
+function detectId(canvas) {
     // Obtient le contexte de dessin de l'élément canvas
     const ctx = canvas.getContext('2d');
     
@@ -20,5 +20,4 @@ function processImage(canvas) {
     // Appelle la fonction pour détecter l'ID 
     detectId(canvas);
 }
-
-window.processImage = processImage;
+window.detectId = detectId;
