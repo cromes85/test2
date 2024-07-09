@@ -1,15 +1,17 @@
-//autoCrop.js
+// autoCrop.js
 
+// Fonction de recadrage automatique de l'image
 function autoCrop() {
   const img = document.getElementById('uploadedImage');
   const canvas = document.getElementById('imageCanvas');
   const ctx = canvas.getContext('2d');
 
-  // Load image onto canvas
+  // Charger l'image sur le canvas
   canvas.width = img.width;
   canvas.height = img.height;
   ctx.drawImage(img, 0, 0, img.width, img.height);
 
+  // Utiliser OpenCV.js pour traiter l'image
   const src = cv.imread(canvas);
   const dst = new cv.Mat();
   const ksize = new cv.Size(3, 3);
@@ -36,15 +38,14 @@ function autoCrop() {
   cv.rectangle(src, new cv.Point(rect.x, rect.y), new cv.Point(rect.x + rect.width, rect.y + rect.height), [255, 0, 0, 255], 2);
 
   const cropped = src.roi(rect);
-
   cv.imshow('imageCanvas', cropped);
 
+  // Libérer la mémoire
   src.delete();
   dst.delete();
   contours.delete();
   hierarchy.delete();
-  cropped.delete();
 }
 
-// Ensure the function is available globally
+// Rendre la fonction accessible globalement
 window.autoCrop = autoCrop;

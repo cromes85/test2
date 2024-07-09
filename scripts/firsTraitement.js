@@ -1,13 +1,15 @@
-//firsTraitement.js
+// firstTraitement.js
+
+// Fonction pour traiter l'image avant la détection d'ID
 function processImage(croppedCanvas) {
   const canvas = document.getElementById('imageCanvas');
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
-  const scale = 2; // Augmentez ce facteur pour une résolution plus élevée
+  const scale = 2; // Augmenter ce facteur pour une résolution plus élevée
   canvas.width = croppedCanvas.width * scale;
   canvas.height = croppedCanvas.height * scale;
   ctx.drawImage(croppedCanvas, 0, 0, canvas.width, canvas.height);
 
-  // Amélioration du contraste
+  // Améliorer le contraste
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const data = imageData.data;
   for (let i = 0; i < data.length; i += 4) {
@@ -20,4 +22,6 @@ function processImage(croppedCanvas) {
 
   detectId(canvas);
 }
+
+// Rendre la fonction accessible globalement
 window.processImage = processImage;

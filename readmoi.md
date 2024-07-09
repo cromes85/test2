@@ -1,41 +1,48 @@
-## README
+# Détection d'ID de Carte Pokémon
 
-### Introduction
-Ce projet est une application web conçue pour détecter et identifier les cartes Pokémon à partir de photos prises principalement à partir de smartphones. L'application analyse l'image de la carte pour extraire des informations telles que le nom, le niveau, la série, l'ID, et d'autres détails permettant d'identifier la carte. Ensuite, elle fournit une estimation du prix moyen de la carte en se basant sur plusieurs sites.
+## Objectif
 
-### Structure des fichiers
-Le projet est organisé de manière à séparer les différentes étapes du processus, facilitant ainsi les améliorations futures. Voici une description de chaque fichier :
+Cette application web permet de prendre une photo d'une carte Pokémon, de rechercher les informations pertinentes (nom, niveau, série, ID, etc.), et de fournir un prix moyen basé sur plusieurs sites.
 
-#### index.html
-Ce fichier HTML constitue la base de l'interface utilisateur. Il permet de charger une image et contient des boutons pour les différentes actions (recadrage automatique, recadrage manuel, détection de l'ID).
+## Structure des Fichiers
 
+### index.html
 
-#### autoCrop.js
-Ce script gère le recadrage automatique de l'image pour détecter les bords de la carte Pokémon et la recadrer correctement.
+Fichier HTML principal qui contient la structure de base de la page web et inclut tous les scripts nécessaires.
 
+### scripts/autoCrop.js
 
-#### cropper.js
-Ce script gère l'initialisation et le fonctionnement du recadrage manuel de l'image.
+Contient la fonction `autoCrop` pour le recadrage automatique de l'image.
 
+### scripts/cropper.js
 
+Contient la fonction `initManualCrop` pour l'initialisation du recadrage manuel.
 
-#### firsTraitement.js
-Ce script améliore l'image recadrée pour la rendre prête à être analysée et détecter les informations de la carte.
+### scripts/firstTraitement.js
 
+Contient la fonction `processImage` pour traiter l'image avant la détection d'ID.
 
-#### id-detection.js
-Ce script gère la détection des informations (ID) de la carte à partir de l'image traitée.
+### scripts/idDetection.js
 
+Contient la fonction `detectId` pour détecter l'ID de la carte Pokémon en utilisant Tesseract.js.
 
-#### main.js
-Ce script gère l'initialisation et la gestion des événements pour les boutons et l'interaction avec l'utilisateur.
+### scripts/main.js
 
+Script principal qui initialise les événements des boutons et gère le flux global de l'application.
 
+## Comment Utiliser
 
-### Utilisation
-1. Chargez l'image de la carte Pokémon en utilisant le bouton "Choisir un fichier".
-2. Cliquez sur "Recadrage Automatique" pour que l'application détecte et recadre automatiquement la carte.
-3. Si nécessaire, utilisez "Initialiser le Recadrage Manuel" pour ajuster manuellement le recadrage.
-4. Cliquez sur "Détecter l'ID" pour extraire les informations de la carte et afficher l'ID détecté.
+1. Sélectionnez une image de la carte Pokémon en cliquant sur le bouton "Choisir un fichier".
+2. Une fois l'image chargée, vous pouvez cliquer sur "Recadrage Automatique" pour recadrer automatiquement l'image, ou sur "Initialiser le Recadrage Manuel" pour le faire manuellement.
+3. Cliquez sur "Détecter l'ID" pour extraire et afficher l'ID de la carte Pokémon.
 
-Cette structure permet une gestion claire et modulaire des différentes étapes du processus de détection et d'identification des cartes Pokémon.
+## Technologies Utilisées
+
+- HTML5
+- JavaScript
+- Tesseract.js pour la détection de texte
+- OpenCV.js pour le traitement d'image
+
+## Notes
+
+Assurez-vous d'avoir une connexion Internet active car Tesseract.js nécessite des ressources en ligne pour fonctionner.
