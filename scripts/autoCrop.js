@@ -14,10 +14,11 @@ function autoCrop() {
     console.log("Initialisation d'OpenCV...");
     // Load the image into an OpenCV Mat
     let src = cv.imread(canvas);
+    let dst = new cv.Mat();
     
-    // Define the rectangle to crop (full width and bottom 40 pixels height)
-    let rect = new cv.Rect(0, canvas.height - 70, canvas.width, 40);
-    let dst = src.roi(rect);
+    // Define the rectangle to crop (full width and bottom 10% of the height)
+    let rect = new cv.Rect(0, canvas.height * 0.9, canvas.width, canvas.height * 0.1);
+    dst = src.roi(rect);
 
     console.log("Recadrage effectué.");
     cv.imshow('imageCanvas', dst);
